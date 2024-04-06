@@ -17,6 +17,16 @@ db.init_app(app)
 def home():
     return '<h1>Zoo app</h1>'
 
+@app.route('/animals')
+def get_all_animals():
+    animals = Animal.query.all()
+    response_body = f''
+    for i in animals:
+        response_body += f'<ul> name: {i.name} </ul>'
+
+    return make_response(response_body)
+
+
 @app.route('/animal/<int:id>')
 def animal_by_id(id):
     animal = Animal.query.filter(Animal.id == id).first()
